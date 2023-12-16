@@ -46,6 +46,12 @@ put the build into data_forwarder_fw and setup new pio project.
 
     pio run -t upload --upload-port /dev/serial/by-id/usb-Arduino_Nano_33_BLE_3C48BB3E0BD44A03-if00
 
+start forwarder:
+
+    edge-impulse-data-forwarder --frequency 62.5
+
+the names before were accX,accY,accZ - were they automatically provided from somewhere?
+
 ## issues
 
 ### nano ble 

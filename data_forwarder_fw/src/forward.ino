@@ -1,6 +1,6 @@
 #include <Arduino_LSM9DS1.h>
 #define CONVERT_G_TO_MS2    9.80665f
-#define FREQUENCY_HZ        50
+#define FREQUENCY_HZ        62.5
 #define INTERVAL_MS         (1000 / (FREQUENCY_HZ + 1))
 #define LED 13
 
