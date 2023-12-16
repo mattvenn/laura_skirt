@@ -19,6 +19,8 @@ to flash:
 
     pio run --target upload
 
+currently fails with this: https://forum.edgeimpulse.com/t/can-no-longer-build-nano33ble-due-to-mbed-compilation-issue/9266
+
 ## edge-impulse-daemon
 
 To collect data.
