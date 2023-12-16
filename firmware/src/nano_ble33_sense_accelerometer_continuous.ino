@@ -21,7 +21,7 @@
  */
 
 /* Includes ---------------------------------------------------------------- */
-#include <laura_skirt_inference.h>
+#include <laura_skirt_inferencing.h>
 #include <Arduino_LSM9DS1.h>
 
 #include <Adafruit_NeoPixel.h>
