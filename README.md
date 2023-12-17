@@ -2,58 +2,42 @@
 
 use nano33ble + edge impulse to flash lights on Laura's skirt depending on what movement she makes.
 
-## compile & flash
+demo: https://photos.app.goo.gl/jk241ZbBRNBDa5vi6
 
-go to https://studio.edgeimpulse.com/studio/19877/deployment
+* qs about improvement https://forum.edgeimpulse.com/t/non-continuous-gesture-recognition/9276
 
-* in the search box in the middle find 'arduino library'
-* at the bottom of the page click 'build'
-* then download and move to local dir
-* update the simlink ei-laura-skirt.zip to point to the new download
+## Setup with Arduino cli
 
-to compile:
+Need [arduino-cli](https://arduino.github.io/arduino-cli/0.35/installation/) installed to ./firmware. Then:
 
-    pio build
 
-to flash:
 
-    pio run --target upload
-
-currently fails with this: https://forum.edgeimpulse.com/t/can-no-longer-build-nano33ble-due-to-mbed-compilation-issue/9266
-also fails on github action
-
-## Arduino cli attempts
+    cd firmware
 
 Install config
 
-    ../ei-daemon-fw/bin/arduino-cli config init 
+    arduino-cli config init 
 
 then edit the config (/home/matt/.arduino15/arduino-cli.yaml) and enable_unsafe_install to be able to install local zips
 and install libs
 
-    ../ei-daemon-fw/bin/arduino-cli lib install --zip-path ei-laura-skirt-arduino-1.0.11.zip
-    ../ei-daemon-fw/bin/arduino-cli lib install --git-url https://github.com/adafruit/Adafruit_NeoPixel
-    ../ei-daemon-fw/bin/arduino-cli lib install Arduino_LSM9DS1
+    arduino-cli lib install --git-url https://github.com/adafruit/Adafruit_NeoPixel
+    arduino-cli lib install Arduino_LSM9DS1
+
+download latest edge impulse to ei-laura-skirt-latest.zip
+and update local library:
+
+    make install_impulse_lib
 
 compile
 
-    cp src/*ino firmware.ino
-    ../ei-daemon-fw/bin/arduino-cli compile --fqbn arduino:mbed_nano:nano33ble
-
-update with new impulse
-
-    # lib install
-    ../ei-daemon-fw/bin/arduino-cli lib install --zip-path ei-laura-skirt-v2-arduino-1.0.1.zip
-    # compile
-    ../ei-daemon-fw/bin/arduino-cli compile --fqbn arduino:mbed_nano:nano33ble --log --output-dir artifacts --export-binaries
+    make compile
 
 upload
 
-    ../ei-daemon-fw/bin/arduino-cli upload --fqbn arduino:mbed_nano:nano33ble -p /dev/serial/by-id/usb-Arduino_Nano_33_BLE_3C48BB3E0BD44A03-if00
+    make upload
 
-fails to find serial port. but double tap reset, get different serial port and this works:
-
-    ../ei-daemon-fw/bin/arduino-cli upload --fqbn arduino:mbed_nano:nano33ble -p /dev/serial/by-id/usb-Arduino_Arduino_Nano_33_BLE_00000000000000003C48BB3E0BD44A03-if00
+can fails to find serial port. but double tap reset to force it.
 
 ## edge-impulse-daemon
 
@@ -65,7 +49,7 @@ To collect data.
 
 This results in arduino-cli installed in a local bin directory, so to flash:
 
-    PATH=./bin:$PATH ./flash_linux.sh 
+    make install_daemon
 
 To connect to edge impulse:
 
@@ -73,20 +57,6 @@ To connect to edge impulse:
 
 Board needs to show here: https://docs.edgeimpulse.com/docs/tutorials/end-to-end-tutorials/continuous-motion-recognition#1.-prerequisites
 For my project the connected devices are here: https://studio.edgeimpulse.com/studio/19877/devices
-
-## collecting new data with data forwarder
-
-can't seem to turn off the unwanted sensor data. trying the dataforwarder with this firmware: https://docs.edgeimpulse.com/docs/tools/edge-impulse-cli/cli-data-forwarder#example-arduino
-
-put the build into data_forwarder_fw and setup new pio project.
-
-    pio run -t upload --upload-port /dev/serial/by-id/usb-Arduino_Nano_33_BLE_3C48BB3E0BD44A03-if00
-
-start forwarder:
-
-    edge-impulse-data-forwarder --frequency 62.5
-
-the names before were accX,accY,accZ - were they automatically provided from somewhere?
 
 ## issues
 
@@ -106,3 +76,4 @@ the names before were accX,accY,accZ - were they automatically provided from som
 * monitor: pio device monitor
 * build: pio run
 * upload: pio run -t upload --upload-port /dev/serial/by-id/usb-Arduino_Nano_33_BLE_3C48BB3E0BD44A03-if00
+* gave up on platformio after not being able to solve this: https://forum.edgeimpulse.com/t/can-no-longer-build-nano33ble-due-to-mbed-compilation-issue/9266/7

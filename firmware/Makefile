@@ -1,9 +1,10 @@
 FQBN := arduino:mbed_nano:nano33ble 
-PORT  := /dev/serial/by-id/usb-Arduino*
-CLI  := ../ei-daemon-fw/bin/arduino-cli
+PORT := /dev/serial/by-id/usb-Arduino*
+CLI  := ./arduino-cli
 
-install:
-	$(CLI) lib install --zip-path ei-laura-skirt-arduino-1.0.11.zip
+install_impulse_lib:
+	$(CLI) lib uninstall laura_skirt_v2_inferencing
+	$(CLI) lib install --zip-path ei-laura-skirt-latest.zip
 
 compile:
 	$(CLI) compile --fqbn $(FQBN) --log --output-dir artifacts --export-binaries
@@ -13,3 +14,6 @@ upload:
 
 monitor:
 	$(CLI) monitor --fqbn $(FQBN) -p $(PORT)
+
+install_daemon:
+	cd ei-daemon-fw; PATH=../:$(PATH) ./flash_linux.sh
