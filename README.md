@@ -40,15 +40,20 @@ compile
     cp src/*ino firmware.ino
     ../ei-daemon-fw/bin/arduino-cli compile --fqbn arduino:mbed_nano:nano33ble
 
-prints no logging! makes the fans whir. after a while finishes!
+update with new impulse
+
+    # lib install
+    ../ei-daemon-fw/bin/arduino-cli lib install --zip-path ei-laura-skirt-v2-arduino-1.0.1.zip
+    # compile
+    ../ei-daemon-fw/bin/arduino-cli compile --fqbn arduino:mbed_nano:nano33ble --log --output-dir artifacts --export-binaries
 
 upload
 
-    ../ei-daemon-fw/bin/arduino-cli  upload --fqbn arduino:mbed_nano:nano33ble -p /dev/serial/by-id/usb-Arduino_Nano_33_BLE_3C48BB3E0BD44A03-if00
+    ../ei-daemon-fw/bin/arduino-cli upload --fqbn arduino:mbed_nano:nano33ble -p /dev/serial/by-id/usb-Arduino_Nano_33_BLE_3C48BB3E0BD44A03-if00
 
 fails to find serial port. but double tap reset, get different serial port and this works:
 
-    ../ei-daemon-fw/bin/arduino-cli  upload --fqbn arduino:mbed_nano:nano33ble -p /dev/serial/by-id/usb-Arduino_Arduino_Nano_33_BLE_00000000000000003C48BB3E0BD44A03-if00
+    ../ei-daemon-fw/bin/arduino-cli upload --fqbn arduino:mbed_nano:nano33ble -p /dev/serial/by-id/usb-Arduino_Arduino_Nano_33_BLE_00000000000000003C48BB3E0BD44A03-if00
 
 ## edge-impulse-daemon
 

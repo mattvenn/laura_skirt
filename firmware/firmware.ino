@@ -23,6 +23,7 @@
 Adafruit_NeoPixel strip1(LED_COUNT, 2, NEO_GRB + NEO_KHZ800);
 
 enum State {none = 0, shimmy = 1, jump = 2, spin_left = 3, spin_right = 4}; 
+enum State detect = none;
 
 /* Constant defines -------------------------------------------------------- */
 #define CONVERT_G_TO_MS2    9.80665f
@@ -61,7 +62,7 @@ void setup()
     // put your setup code here, to run once:
     Serial.begin(115200);
     // comment out the below line to cancel the wait for USB connection (needed for native USB)
-    while (!Serial);
+    // while (!Serial);
     Serial.println("Edge Impulse Inferencing Demo");
 
     if (!IMU.begin()) {
