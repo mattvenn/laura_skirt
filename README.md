@@ -20,6 +20,34 @@ to flash:
     pio run --target upload
 
 currently fails with this: https://forum.edgeimpulse.com/t/can-no-longer-build-nano33ble-due-to-mbed-compilation-issue/9266
+also fails on github action
+
+## Arduino cli attempts
+
+Install config
+
+    ../ei-daemon-fw/bin/arduino-cli config init 
+
+then edit the config (/home/matt/.arduino15/arduino-cli.yaml) and enable_unsafe_install to be able to install local zips
+and install libs
+
+    ../ei-daemon-fw/bin/arduino-cli lib install --zip-path ./ei-tester-arduino-1.0.1.zip
+    ../ei-daemon-fw/bin/arduino-cli lib  install --git-url https://github.com/adafruit/Adafruit_NeoPixel
+    ../ei-daemon-fw/bin/arduino-cli  lib install Arduino_LSM9DS1
+
+compile
+
+    ../ei-daemon-fw/bin/arduino-cli  compile --fqbn arduino:mbed_nano:nano33ble
+
+prints no logging! makes the fans whir. after a while finishes!
+
+upload
+
+    ../ei-daemon-fw/bin/arduino-cli  upload --fqbn arduino:mbed_nano:nano33ble -p /dev/serial/by-id/usb-Arduino_Nano_33_BLE_3C48BB3E0BD44A03-if00
+
+fails to find serial port. but double tap reset, get different serial port and this works:
+
+    ../ei-daemon-fw/bin/arduino-cli  upload --fqbn arduino:mbed_nano:nano33ble -p /dev/serial/by-id/usb-Arduino_Arduino_Nano_33_BLE_00000000000000003C48BB3E0BD44A03-if00
 
 ## edge-impulse-daemon
 
@@ -65,6 +93,7 @@ the names before were accX,accY,accZ - were they automatically provided from som
 * Use this port /dev/serial/by-id/usb-Arduino_Nano_33_BLE_3C48BB3E0BD44A03-if00
 * If that fails with pio, then waiting for it to start trying then double press reset works
 * After updating fw, the nano disappeared from serial ports, forced the nrf platform to nordicnrf52@9.5.0 after finding [this](https://community.platformio.org/t/nano33ble-device-serial-port-hangs-after-upload-attempt-using-clion-platformio-on-m2-mac/33508/3)
+* FastLED still not supported :(
 
 ### pio
 
