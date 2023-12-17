@@ -31,13 +31,14 @@ Install config
 then edit the config (/home/matt/.arduino15/arduino-cli.yaml) and enable_unsafe_install to be able to install local zips
 and install libs
 
-    ../ei-daemon-fw/bin/arduino-cli lib install --zip-path ./ei-tester-arduino-1.0.1.zip
-    ../ei-daemon-fw/bin/arduino-cli lib  install --git-url https://github.com/adafruit/Adafruit_NeoPixel
-    ../ei-daemon-fw/bin/arduino-cli  lib install Arduino_LSM9DS1
+    ../ei-daemon-fw/bin/arduino-cli lib install --zip-path ei-laura-skirt-arduino-1.0.11.zip
+    ../ei-daemon-fw/bin/arduino-cli lib install --git-url https://github.com/adafruit/Adafruit_NeoPixel
+    ../ei-daemon-fw/bin/arduino-cli lib install Arduino_LSM9DS1
 
 compile
 
-    ../ei-daemon-fw/bin/arduino-cli  compile --fqbn arduino:mbed_nano:nano33ble
+    cp src/*ino firmware.ino
+    ../ei-daemon-fw/bin/arduino-cli compile --fqbn arduino:mbed_nano:nano33ble
 
 prints no logging! makes the fans whir. after a while finishes!
 
