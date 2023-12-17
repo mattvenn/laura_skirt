@@ -10,8 +10,6 @@ demo: https://photos.app.goo.gl/jk241ZbBRNBDa5vi6
 
 Need [arduino-cli](https://arduino.github.io/arduino-cli/0.35/installation/) installed to ./firmware. Then:
 
-
-
     cd firmware
 
 Install config
@@ -59,6 +57,14 @@ Board needs to show here: https://docs.edgeimpulse.com/docs/tutorials/end-to-end
 For my project the connected devices are here: https://studio.edgeimpulse.com/studio/19877/devices
 
 ## issues
+
+### sensor fusion
+
+with gyr xyz instead of acc xyz, the firmware fails with an error because it doesn't match with model_metadata.h. Try the fusion example, but this uses all the sensors.
+
+Deleted the libs I'm not using, then deleted from the array of sensors everything apart from gyr.
+Delete the init and poll of sensors I'm not using.
+Change the poll_gyr to put data into 0, 1, 2
 
 ### nano ble 
 
