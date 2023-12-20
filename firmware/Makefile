@@ -16,4 +16,5 @@ monitor:
 	$(CLI) monitor --fqbn $(FQBN) -p $(PORT)
 
 install_daemon:
+#    wget https://cdn.edgeimpulse.com/firmware/arduino-nano-33-ble-sense.zip
 	cd ei-daemon-fw; PATH=../:$(PATH) ./flash_linux.sh
